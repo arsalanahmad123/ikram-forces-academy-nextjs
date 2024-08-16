@@ -1,3 +1,29 @@
 {
-  "extends": "next/core-web-vitals"
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:prettier/recommended",
+        "next"
+    ],
+    "plugins": ["react"],
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "react/jsx-newline": ["error", { "prevent": false }],
+        "react/jsx-wrap-multilines": ["error"],
+        "prettier/prettier": [
+            "error",
+            {
+                "printWidth": 80,
+                "singleQuote": true,
+                "trailingComma": "es5",
+                "tabWidth": 4,
+                "semi": true
+            }
+        ]
+    }
 }
