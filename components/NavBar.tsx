@@ -49,33 +49,39 @@ export default function NavBar() {
         router.push('/dashboard');
     };
 
-    const { isSignedIn, user } = useUser();
+    const { isSignedIn } = useUser();
 
     return (
         <nav className="py-5 bg-white/55 dark:bg-gray-950/55 backdrop-blur-md w-full flex justify-between items-center lg:px-20 px-10 fixed top-0 z-50 ">
             <Link href={'/'}>
                 <Image src={'/logo.svg'} alt="Logo" width={100} height={100} />
             </Link>
+
             <ul className="flex-row justify-center items-center gap-x-10 hidden xl:flex">
                 {navList.map((list, i) => (
                     <NavItem key={i} text={list.text} link={list.link} />
                 ))}
+
                 <ThemeToggle />
+
                 <Button
                     onClick={handleDashboardRedirect}
                     className="font-semibold lg:ml-10"
                 >
                     {isSignedIn ? 'Dashboard' : 'Student Portal'}
                 </Button>
+
                 <SignedIn>
                     <UserButton />
                 </SignedIn>
             </ul>
+
             <div className="xl:hidden block ">
                 <Sheet>
                     <SheetTrigger asChild>
                         <Menu className="hover:cursor-pointer" size={30} />
                     </SheetTrigger>
+
                     <SheetContent className="py-10">
                         <div
                             aria-hidden="true"
@@ -89,14 +95,17 @@ export default function NavBar() {
                                 className="relative left-[calc(80%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                             />
                         </div>
+
                         <SheetHeader>
                             <SheetTitle className="text-2xl font-bold uppercase">
                                 Menu
                             </SheetTitle>
+
                             <SheetDescription>
                                 Navigate through sections here
                             </SheetDescription>
                         </SheetHeader>
+
                         <div className="grid gap-6 py-4 mt-10">
                             {navList.map((list, i) => (
                                 <div className="w-full" key={i}>
@@ -106,7 +115,9 @@ export default function NavBar() {
                                     />
                                 </div>
                             ))}
+
                             <ThemeToggle />
+
                             <Button
                                 onClick={handleDashboardRedirect}
                                 className="font-semibold "
@@ -114,6 +125,7 @@ export default function NavBar() {
                                 Student Portal
                             </Button>
                         </div>
+
                         <SheetFooter>
                             <SheetClose asChild>
                                 <Button type="submit">Close Menu</Button>

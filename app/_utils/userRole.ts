@@ -5,7 +5,7 @@ function checkUserRole(session: any) {
         !session.user.organizationMemberships ||
         session.user.organizationMemberships.length === 0
     ) {
-        return null; // Return null if the user is not a basic member
+        return null;
     }
 
     const organizationMemberships = session.user.organizationMemberships;

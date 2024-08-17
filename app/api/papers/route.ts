@@ -2,7 +2,7 @@ import { Paper, Question } from '@/models/models';
 import connectDB from '@/config/connectDB';
 import { NextResponse } from 'next/server';
 
-export async function GET(_request: Request) {
+export async function GET() {
     try {
         await connectDB();
         const papers = await Paper.find().populate('questions');

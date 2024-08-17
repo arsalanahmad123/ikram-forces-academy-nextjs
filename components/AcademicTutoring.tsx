@@ -47,18 +47,22 @@ export default function AcademicTutoring() {
                 <div className="absolute xl:top-24 left-8 xl:block hidden">
                     <Vector color="#0F172A" />
                 </div>
+
                 <div className="flex flex-col gap-10">
                     <h3 className="xl:text-6xl font-bold  md:text-5xl max-w-5xl text-4xl text-primary mx-auto ">
                         Excel in School with Expert Tuition
                     </h3>
+
                     <p className="font-medium text-primary text-lg max-w-md">
                         Starting from 5th grade, we offer comprehensive tuition
-                        in all subjects, tailored to your child's needs. Whether
-                        it's full academic support or focused coaching in a
-                        specific subject, our experienced tutors are here to
-                        help. Available both online and in-person, we’re
+                        in all Transform Your Child&rsquo;s Future with Expert
+                        Guidance subjects, tailored to your child&rsquo;s needs.
+                        Whether it is full academic support or focused coaching
+                        in a specific subject, our experienced tutors are here
+                        to help. Available both online and in-person, we are
                         dedicated to helping your child achieve their best.
                     </p>
+
                     <Link
                         href={'#'}
                         className={`${buttonVariants({ variant: 'default' })} font-semibold lg:w-[200px]`}
@@ -66,6 +70,7 @@ export default function AcademicTutoring() {
                         Get Consultation
                     </Link>
                 </div>
+
                 <Image
                     src="/tuition-center.png"
                     alt="Hero Banner"
@@ -75,6 +80,7 @@ export default function AcademicTutoring() {
                     style={{ objectFit: 'contain' }}
                 />
             </div>
+
             <div className="relative container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-28">
                 <div
                     aria-hidden="true"
@@ -88,6 +94,7 @@ export default function AcademicTutoring() {
                         className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[60deg] bg-gradient-to-r from-[#20AD96] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                     />
                 </div>
+
                 {qualities.map((quality, i) => (
                     <TutorCard
                         key={i}

@@ -10,11 +10,17 @@ export default function Home() {
     return (
         <main>
             <Hero />
+
             <About />
+
             <CadetCoaching />
+
             <AcademicTutoring />
+
             <KidsCoding />
+
             <Quotes />
+
             <Footer />
         </main>
     );

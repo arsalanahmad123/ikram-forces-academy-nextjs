@@ -21,25 +21,29 @@ export default function Hero() {
                     className="relative left-[calc(80%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                 />
             </div>
+
             <div className="relative w-full lg:px-52 lg:py-10 grid grid-cols-1 xl:grid-cols-2 mt-52 gap-10">
                 <div className="absolute xl:top-0 xl:left-20 lg:-top-1 md:left-32 lg:-left-32 -top-10 left-5">
                     <Vector color="#20AD96" />
                 </div>
+
                 <div className="flex flex-col gap-10 lg:px-10 px-3 container">
                     <p className="font-semibold text-lg text-theme1 bg-white/30 backdrop-blur-3xl rounded-md p-1.5 max-w-md dark:bg-white/10 dark:text-white">
                         Innovative Coaching and Tutoring Solutions
                     </p>
-                    <h1 className="font-extrabold lg:text-7xl md:text-6xl text-4xl tracking-wide text-primary dark:text-white">
-                        Transform Your Child's Future with Expert Guidance
-                    </h1>
+
+                    <h1 className="font-extrabold lg:text-7xl md:text-6xl text-4xl tracking-wide text-primary dark:text-white"></h1>
+
                     <p className="font-medium text-lg max-w-lg">
                         Partner with us to provide your child with the finest
                         academic support. Our tailored coaching programs are
                         crafted to maximize their potential and set them on a
                         path to success.
                     </p>
+
                     <Button className="md:w-[20%] w-[40%]">Learn More</Button>
                 </div>
+
                 <div className="flex justify-end items-center relative xl:mt-0 ">
                     <Image
                         src="/hero-banner.png"
@@ -47,6 +51,7 @@ export default function Hero() {
                         fill
                         style={{ objectFit: 'contain' }}
                     />
+
                     <span
                         className="absolute xl:top-0 xl:right-0 lg:top-1/2 lg:-right-16 md:top-1/4 md:right-10 bg-white shadow-md rounded-md backdrop-blur-md md:p-5  justify-center items-center gap-2 font-bold md:text-lg
                             dark:bg-slate-950/20 dark:backdrop-blur-lg hidden md:flex
@@ -55,6 +60,7 @@ export default function Hero() {
                         <Check className="text-theme1 " />
                         Achieve Success
                     </span>
+
                     <span
                         className="absolute xl:top-0 xl:left-5 lg:top-1/3 lg:left-10 md:top-1/4 md:left-10 bg-white shadow-md rounded-md backdrop-blur-md md:p-5  justify-center items-center gap-2 font-bold md:text-lg dark:bg-slate-950/20 dark:backdrop-blur-lg hidden md:flex
                         "
@@ -62,6 +68,7 @@ export default function Hero() {
                         <Check className="text-theme1 " />
                         Expert Guidance
                     </span>
+
                     <svg
                         viewBox="0 0 200 200"
                         xmlns="http://www.w3.org/2000/svg"

@@ -63,6 +63,7 @@ const CollegesCarousel = () => {
                     />
                 </motion.div>
             ))}
+
             <div className="flex flex-row gap-3 md:mt-[700px] mt-80 z-20">
                 <button
                     className="text-white dark:text-primary dark:bg-gray-950 dark:shadow-lg bg-primary rounded-md py-2 px-4"
@@ -70,6 +71,7 @@ const CollegesCarousel = () => {
                 >
                     <ChevronLeft />
                 </button>
+
                 <button
                     className="text-white dark:text-primary dark:bg-gray-950 dark:shadow-lg bg-primary rounded-md py-2 px-4"
                     onClick={handleNext}

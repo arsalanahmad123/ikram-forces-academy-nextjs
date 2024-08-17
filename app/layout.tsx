@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ReactNode } from 'react';
 import './globals.css';
 import { Inter as FontSans } from 'next/font/google';
 import { cn } from '@/lib/utils';
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
     children,
 }: Readonly<{
-    children: React.ReactNode;
+    children: ReactNode;
 }>) {
     return (
         <ClerkProvider>
@@ -38,6 +39,7 @@ export default function RootLayout({
                         disableTransitionOnChange
                     >
                         <NavBar />
+
                         {children}
                     </ThemeProvider>
                 </body>
