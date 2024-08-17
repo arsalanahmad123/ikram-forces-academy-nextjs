@@ -1,0 +1,86 @@
+import { Paper, Question } from '@/models/models';
+import connectDB from '@/config/connectDB';
+import { NextResponse } from 'next/server';
+
+export async function GET(_request: Request) {
+    try {
+        await connectDB();
+        const papers = await Paper.find().populate('questions');
+        return NextResponse.json(papers, { status: 200 });
+    } catch (error: any) {
+        console.log(error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+}
+
+export async function POST(request: Request) {
+    try {
+        await connectDB();
+        const body = await request.json();
+        const { title, description } = body;
+        const paper = await Paper.create({
+            title,
+            description,
+            questions: [],
+        });
+
+        return NextResponse.json(paper, { status: 201 });
+    } catch (error: any) {
+        console.log(error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+}
+
+export async function PUT(request: Request) {
+    try {
+        await connectDB();
+        const body = await request.json();
+        const { id, title, description } = body;
+
+        const updatedPaper = await Paper.findByIdAndUpdate(
+            id,
+            { title, description },
+            { new: true }
+        );
+
+        if (!updatedPaper) {
+            return NextResponse.json(
+                { error: 'Paper not found' },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json(updatedPaper, { status: 200 });
+    } catch (error: any) {
+        console.log(error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+}
+
+export async function DELETE(request: Request) {
+    try {
+        await connectDB();
+        const { paperId } = await request.json();
+
+        // Delete the paper by its ID
+        const deletedPaper = await Paper.findByIdAndDelete(paperId);
+
+        if (!deletedPaper) {
+            return NextResponse.json(
+                { error: 'Paper not found' },
+                { status: 404 }
+            );
+        }
+
+        // Delete all questions related to the paper
+        await Question.deleteMany({ paperId: paperId });
+
+        return NextResponse.json(
+            { message: 'Paper and related questions deleted successfully' },
+            { status: 200 }
+        );
+    } catch (error: any) {
+        console.log(error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+}
