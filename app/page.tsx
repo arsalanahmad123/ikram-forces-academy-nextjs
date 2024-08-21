@@ -7,21 +7,21 @@ import AcademicTutoring from '@/components/AcademicTutoring';
 import KidsCoding from '@/components/KidsCoding';
 
 export default function Home() {
-    return (
-        <main>
-            <Hero />
+  return (
+    <main>
+      <Hero />
 
-            <About />
+      <About />
 
-            <CadetCoaching />
+      <CadetCoaching />
 
-            <AcademicTutoring />
+      <AcademicTutoring />
 
-            <KidsCoding />
+      <KidsCoding />
 
-            <Quotes />
+      <Quotes />
 
-            <Footer />
-        </main>
-    );
+      <Footer />
+    </main>
+  );
 }
