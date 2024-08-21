@@ -36,7 +36,7 @@ const QuestionSchema: Schema<IQuestion> = new Schema(
       type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 interface IPaper extends Document {
@@ -55,7 +55,7 @@ const PaperSchema: Schema<IPaper> = new Schema(
     time: { type: Number, required: true },
     active: { type: Boolean, default: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Question =

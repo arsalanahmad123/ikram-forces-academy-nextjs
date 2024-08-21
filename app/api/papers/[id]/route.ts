@@ -4,7 +4,7 @@ import { Paper } from '@/models/models';
 
 export async function GET(
   _request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     await connectDB();

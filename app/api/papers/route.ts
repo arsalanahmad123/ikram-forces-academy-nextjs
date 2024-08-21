@@ -42,7 +42,7 @@ export async function PUT(request: Request) {
     const updatedPaper = await Paper.findByIdAndUpdate(
       id,
       { title, description, time },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedPaper) {
@@ -72,7 +72,7 @@ export async function DELETE(request: Request) {
 
     return NextResponse.json(
       { message: 'Paper and related questions deleted successfully' },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.log(error.message);

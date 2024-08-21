@@ -11,7 +11,7 @@ type WithRoleProps = {
 
 const withRole = (
   WrappedComponent: React.ComponentType<any>,
-  requiredRole: string
+  requiredRole: string,
 ) => {
   const Wrapper: React.FC<any> = (props) => {
     const { user } = useUser();

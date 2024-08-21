@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     if (!paperId || !title || !options || isNaN(correctAnswer)) {
       return NextResponse.json(
         { error: 'All fields are required and must be valid' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,14 +39,14 @@ export async function POST(request: Request) {
     if (options.length !== 4) {
       return NextResponse.json(
         { error: 'There must be exactly 4 options' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (correctAnswer < 0 || correctAnswer >= options.length) {
       return NextResponse.json(
         { error: 'Correct answer index must be between 0 and 3' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
         console.error('Image upload failed:', uploadError);
         return NextResponse.json(
           { error: 'Failed to upload image' },
-          { status: 500 }
+          { status: 500 },
         );
       }
     }
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
     await Paper.findByIdAndUpdate(
       paperId,
       { $push: { questions: question._id } },
-      { new: true }
+      { new: true },
     );
 
     return NextResponse.json(question, { status: 201 });
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
     console.error('Error in POST /api/questions:', error);
     return NextResponse.json(
       { error: 'Internal Server Error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -105,7 +105,7 @@ export async function PUT(request: Request) {
     const updatedQuestion = await Question.findByIdAndUpdate(
       questionId,
       { title, options, correctAnswer },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedQuestion) {
@@ -130,7 +130,7 @@ export async function DELETE(request: Request) {
     if (!deletedQuestion) {
       return NextResponse.json(
         { error: 'Question not found' },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -143,7 +143,7 @@ export async function DELETE(request: Request) {
       {
         message: 'Question and its reference in the paper deleted successfully',
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.log(error.message);

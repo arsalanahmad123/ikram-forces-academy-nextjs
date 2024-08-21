@@ -33,7 +33,7 @@ export default function QuestionDisplay({
   timeLimit,
 }: QuestionDisplayProps) {
   const [selectedOption, setSelectedOption] = useState<string | null>(
-    selectedAnswer
+    selectedAnswer,
   );
   const [timeLeft, setTimeLeft] = useState(timeLimit * 60);
 

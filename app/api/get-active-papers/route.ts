@@ -12,7 +12,7 @@ export async function GET() {
     console.error('Error getting active papers:', error);
     return NextResponse.json(
       { error: 'Error getting active papers' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

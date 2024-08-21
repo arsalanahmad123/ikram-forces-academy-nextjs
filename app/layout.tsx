@@ -31,7 +31,7 @@ export default function RootLayout({
         <body
           className={cn(
             'relative min-h-screen bg-background font-sans antialiased flex flex-col overflow-x-hidden',
-            fontSans.variable
+            fontSans.variable,
           )}
         >
           <ThemeProvider

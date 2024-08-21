@@ -15,7 +15,7 @@ const CollegesCarousel = () => {
   const handleNext = () => {
     setPositionIndexes((prevIndexes) => {
       const updatedIndexes = prevIndexes.map(
-        (prevIndex) => (prevIndex + 1) % 5
+        (prevIndex) => (prevIndex + 1) % 5,
       );
       return updatedIndexes;
     });
@@ -24,7 +24,7 @@ const CollegesCarousel = () => {
   const handleBack = () => {
     setPositionIndexes((prevIndexes) => {
       const updatedIndexes = prevIndexes.map(
-        (prevIndex) => (prevIndex + 4) % 5
+        (prevIndex) => (prevIndex + 4) % 5,
       );
       return updatedIndexes;
     });

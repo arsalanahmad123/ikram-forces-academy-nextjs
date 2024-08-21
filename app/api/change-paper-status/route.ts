@@ -18,14 +18,14 @@ export async function PUT(request: Request) {
     const updatedPaper = await Paper.findByIdAndUpdate(
       paperId,
       { active: !paper.active },
-      { new: true }
+      { new: true },
     );
 
     return NextResponse.json(updatedPaper);
   } catch (error) {
     return NextResponse.json(
       { error: 'Error updating paper' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
