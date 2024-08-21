@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import withRole from '@/components/withRole';
 import { toast } from 'react-hot-toast';
 import { ArrowLeft } from 'lucide-react';
+import React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -34,7 +35,6 @@ async function fetchPapers(): Promise<Paper[]> {
     headers: {
       'Content-Type': 'application/json',
     },
-    // cache: 'no-store',
   });
 
   if (!res.ok) {

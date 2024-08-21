@@ -43,7 +43,6 @@ export default function PaperCard({
   const [editTitle, setEditTitle] = useState(title);
   const [editContent, setEditContent] = useState(content);
   const [Time, setTime] = useState(time);
-  const [Active, setActive] = useState(active);
 
   async function deletePaper(id: string): Promise<void> {
     try {

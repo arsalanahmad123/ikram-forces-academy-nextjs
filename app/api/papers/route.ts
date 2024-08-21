@@ -1,7 +1,6 @@
 import { Paper, Question } from '@/models/models';
 import connectDB from '@/config/connectDB';
 import { NextResponse } from 'next/server';
-import { cache } from 'react';
 
 export async function GET() {
   try {

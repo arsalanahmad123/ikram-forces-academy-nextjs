@@ -1,5 +1,5 @@
 'use client';
-
+import React from 'react';
 import Loader from '@/components/Loader';
 import {
   Table,
@@ -17,6 +17,7 @@ import { Delete, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -27,7 +28,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
-import { DialogClose } from '@radix-ui/react-dialog';
 
 interface Question {
   _id: string;
@@ -52,7 +52,6 @@ function Page({ params }: { params: { id: string } }) {
   const [questions, setQuestions] = useState<Question[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -317,33 +316,34 @@ function QuestionsTable({
   paperId: string;
   setQuestions: React.Dispatch<React.SetStateAction<Question[] | null>>;
 }) {
+    
+
+    
   const deleteQuestion = async (id: string) => {
-    try {
-      const res = await fetch(`${baseUrl}/api/questions`, {
-        method: 'DELETE',
-        body: JSON.stringify({ paperId: paperId, questionId: id }),
+  try {
+    const res = await fetch(`${baseUrl}/api/questions`, {
+      method: 'DELETE',
+      body: JSON.stringify({ paperId: paperId, questionId: id }),
+    });
+
+    if (res.ok) {
+      toast.success('Question deleted');
+      setQuestions((prevQuestions) => {
+        if (!prevQuestions) {
+          return null;
+        }
+        return prevQuestions.filter((question) => question._id !== id);
       });
-
-      if (res.ok) {
-        toast.success('Question deleted');
-        setQuestions((prevQuestions) => {
-          if (!prevQuestions) {
-            return null;
-          }
-          return prevQuestions.filter((question) => question._id !== id);
-        });
-
-        return;
-      }
-
-      if (!res.ok) {
-        throw new Error('Failed to delete question please try again ');
-      }
-    } catch (error: any) {
-      toast.error('Error deleting message please try again ');
-      console.log(error.message);
+    } else {
+      throw new Error('Failed to delete question. Please try again.');
     }
-  };
+  } catch (error: any) {
+    toast.error('Error deleting question. Please try again.');
+    console.log(error.message);
+  }
+};
+
+
 
   return (
     <Table>
