@@ -43,7 +43,6 @@ interface Paper {
   description: string;
   questions: Question[];
 }
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 
 function Page({ params }: { params: { id: string } }) {
@@ -56,7 +55,7 @@ function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${baseUrl}/api/papers/${id}`);
+        const response = await fetch(`/api/papers/${id}`);
         if (!response.ok) throw new Error('Failed to fetch paper');
         const paperData = await response.json();
         setPaper(paperData);
@@ -174,7 +173,7 @@ function AddQuestionDialog({
     }
 
     try {
-      const res = await fetch(`${baseUrl}/api/questions`, {
+      const res = await fetch('/api/questions', {
         method: 'POST',
         body: data,
       });
@@ -321,7 +320,7 @@ function QuestionsTable({
 
   const deleteQuestion = async (id: string) => {
   try {
-    const res = await fetch(`${baseUrl}/api/questions`, {
+    const res = await fetch('/api/questions', {
       method: 'DELETE',
       body: JSON.stringify({ paperId: paperId, questionId: id }),
     });

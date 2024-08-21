@@ -28,10 +28,9 @@ interface Paper {
   active: boolean;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 async function fetchPapers(): Promise<Paper[]> {
-  const res = await fetch(`${baseUrl}/api/papers`, {
+  const res = await fetch(`/api/papers`, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -49,7 +48,7 @@ async function createPaper(paperData: {
   description: string;
   time: number;
 }): Promise<Paper[]> {
-  const res = await fetch(`${baseUrl}/api/papers`, {
+  const res = await fetch(`/api/papers`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

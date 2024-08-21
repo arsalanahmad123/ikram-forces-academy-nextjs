@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import ModalDialog from '@/components/ModalDialog';
 import QuestionDisplay from '@/components/QuestionDisplay';
-import { Button } from '@/components/ui/button';
 import Loader from '@/components/Loader';
 
 interface SolvePaperParams {
@@ -26,7 +25,6 @@ type Paper = {
   questions: Question[];
 };
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export default function Page({ params }: SolvePaperParams) {
   const [paper, setPaper] = useState<Paper | null>(null);
@@ -38,7 +36,7 @@ export default function Page({ params }: SolvePaperParams) {
   useEffect(() => {
     const getPaper = async () => {
       try {
-        const res = await fetch(`${baseUrl}/api/papers/${params.id}`);
+        const res = await fetch(`/api/papers/${params.id}`);
 
         if (res.ok) {
           const data = await res.json();
