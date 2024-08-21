@@ -43,8 +43,8 @@ interface Paper {
   description: string;
   questions: Question[];
 }
-
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
 
 function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -130,7 +130,6 @@ function PaperTable({
   );
 }
 
-// Updated dialog form component to accept the specified fields
 function AddQuestionDialog({
   paperId,
   setQuestions,
@@ -145,7 +144,7 @@ function AddQuestionDialog({
   const [option4, setOption4] = useState('');
   const [correctAnswer, setCorrectAnswer] = useState<number | ''>('');
   const [image, setImage] = useState<File | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -157,6 +156,7 @@ function AddQuestionDialog({
       option4 === '' ||
       correctAnswer === ''
     ) {
+        setIsSubmitting(false)
       toast.error('All fields are required!!');
       return;
     }
@@ -180,11 +180,11 @@ function AddQuestionDialog({
       });
 
       if (!res.ok) {
-        throw new Error('Failed to submit question');
         setIsSubmitting(false);
+        throw new Error('Failed to submit question');
       }
 
-      const newQuestion: Question = await res.json(); // Ensure TypeScript understands this is a Question
+      const newQuestion: Question = await res.json(); 
 
       toast.success('Question added successfully!');
       setTitle('');
@@ -318,7 +318,7 @@ function QuestionsTable({
 }) {
     
 
-    
+
   const deleteQuestion = async (id: string) => {
   try {
     const res = await fetch(`${baseUrl}/api/questions`, {
