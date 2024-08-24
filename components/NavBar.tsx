@@ -21,26 +21,11 @@ import Link from 'next/link';
 import { SignedIn, UserButton } from '@clerk/nextjs';
 
 const navList = [
-    {
-        text: 'Home',
-        link: '/#home',
-    },
-    {
-        text: 'About',
-        link: '/#about',
-    },
-    {
-        text: 'Cadet Coaching',
-        link: '/#cadetcoaching',
-    },
-    {
-        text: 'Academic Tutoring',
-        link: '/#tutoring',
-    },
-    {
-        text: 'Kids Coding',
-        link: '/#kids-coding',
-    },
+    { text: 'Home', link: '/#home' },
+    { text: 'About', link: '/#about' },
+    { text: 'Cadet Coaching', link: '/#cadetcoaching' },
+    { text: 'Academic Tutoring', link: '/#tutoring' },
+    { text: 'Kids Coding', link: '/#kids-coding' },
 ];
 
 export default function NavBar() {
@@ -52,7 +37,7 @@ export default function NavBar() {
     const { isSignedIn } = useUser();
 
     return (
-        <nav className="py-5 bg-white dark:bg-gray-950/55 backdrop-blur-md w-full flex justify-between items-center lg:px-20 px-10 fixed top-0 z-50 ">
+        <nav className="py-5 bg-white/55 dark:bg-gray-950/55 backdrop-blur-md w-full flex justify-between items-center lg:px-10 px-5 fixed top-0 z-50">
             <Link href={'/'}>
                 <Image src={'/logo.svg'} alt="Logo" width={100} height={100} />
             </Link>
@@ -75,13 +60,13 @@ export default function NavBar() {
                 </SignedIn>
             </ul>
 
-            <div className="xl:hidden  flex justify-between items-center gap-10">
+            <div className="xl:hidden flex justify-between items-center gap-10">
                 <Sheet>
                     <SheetTrigger asChild>
                         <Menu className="hover:cursor-pointer" size={30} />
                     </SheetTrigger>
 
-                    <SheetContent className="py-10 w-full max-w-[400px] mx-auto">
+                    <SheetContent className="py-10 w-full max-w-sm mx-auto">
                         <div
                             aria-hidden="true"
                             className="absolute dark:block hidden inset-x-0 top-0 -right-96 -z-10 transform-gpu overflow-hidden blur-3xl"
@@ -89,9 +74,9 @@ export default function NavBar() {
                             <div
                                 style={{
                                     clipPath:
-                                        'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+                                        'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
                                 }}
-                                className="relative left-[calc(80%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+                                className="relative left-[calc(50%-15rem)] aspect-[1155/678] w-full max-w-[36rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
                             />
                         </div>
 
@@ -99,7 +84,6 @@ export default function NavBar() {
                             <SheetTitle className="text-2xl font-bold uppercase">
                                 Menu
                             </SheetTitle>
-
                             <SheetDescription className="flex flex-col gap-5 z-50">
                                 Navigate through sections here
                             </SheetDescription>
@@ -119,7 +103,7 @@ export default function NavBar() {
 
                             <Button
                                 onClick={handleDashboardRedirect}
-                                className="font-semibold "
+                                className="font-semibold"
                             >
                                 {isSignedIn ? 'Dashboard' : 'Student Portal'}
                             </Button>

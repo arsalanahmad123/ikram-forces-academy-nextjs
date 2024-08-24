@@ -10,42 +10,42 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from 'react-hot-toast';
 
 const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
+    subsets: ['latin'],
+    variable: '--font-sans',
 });
 
 export const metadata: Metadata = {
-  title: 'Homepage-Ikram Forces Academy',
-  description: 'Home page ',
+    title: 'Homepage-Ikram Forces Academy',
+    description: 'Home page ',
 };
 export const revalidate = 60;
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: ReactNode;
+    children: ReactNode;
 }>) {
-  return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            'relative min-h-screen bg-background font-sans antialiased flex flex-col overflow-x-hidden',
-            fontSans.variable,
-          )}
-        >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NavBarWrapper />
-            <Toaster />
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
-  );
+    return (
+        <ClerkProvider>
+            <html lang="en" suppressHydrationWarning>
+                <body
+                    className={cn(
+                        'relative min-h-screen bg-background font-sans antialiased flex flex-col ',
+                        fontSans.variable
+                    )}
+                >
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        <NavBarWrapper />
+                        <Toaster />
+                        {children}
+                    </ThemeProvider>
+                </body>
+            </html>
+        </ClerkProvider>
+    );
 }
