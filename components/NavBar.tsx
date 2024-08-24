@@ -66,7 +66,7 @@ export default function NavBar() {
                         <Menu className="hover:cursor-pointer" size={30} />
                     </SheetTrigger>
 
-                    <SheetContent className="py-10 w-full max-w-sm mx-auto">
+                    <SheetContent className="py-10 md:w-full md:max-w-sm mx-auto w-[200px]">
                         <div
                             aria-hidden="true"
                             className="absolute dark:block hidden inset-x-0 top-0 -right-96 -z-10 transform-gpu overflow-hidden blur-3xl"
