@@ -2,13 +2,11 @@
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { Paper } from '@/models/models';
 
 // Define the types
 type Question = {
