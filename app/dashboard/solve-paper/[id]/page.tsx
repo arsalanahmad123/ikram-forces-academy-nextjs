@@ -109,6 +109,7 @@ export default function Page({ params }: SolvePaperParams) {
                     body: JSON.stringify({
                         paperId: paper._id,
                         userId: user?.id,
+                        username: user?.username,
                         userAnswers: updatedAnswers,
                     }),
                 });

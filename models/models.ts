@@ -61,6 +61,7 @@ const PaperSchema: Schema<IPaper> = new Schema(
 interface PaperSubmission extends Document {
     score: number;
     userId: string;
+    username: string;
     paperId: mongoose.Schema.Types.ObjectId;
 }
 
@@ -68,6 +69,7 @@ const PaperSubmissionSchema: Schema<PaperSubmission> = new Schema(
     {
         score: { type: Number, required: true },
         userId: { type: String, required: true },
+        username: { type: String, required: true },
         paperId: { type: Schema.Types.ObjectId, ref: 'Paper' },
     },
     { timestamps: true }

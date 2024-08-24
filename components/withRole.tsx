@@ -1,13 +1,8 @@
 'use client';
 
-import React, { ReactNode, useEffect } from 'react'; // Import React
+import React, { useEffect } from 'react'; // Import React
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
-
-type WithRoleProps = {
-    role: string;
-    children: ReactNode;
-};
 
 const withRole = (
     WrappedComponent: React.ComponentType<any>,

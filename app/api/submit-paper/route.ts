@@ -9,10 +9,15 @@ export async function POST(request: NextRequest) {
 
         // Parse the request body
         const body = await request.json();
-        const { userId, paperId, userAnswers } = body;
+        const { userId, paperId, userAnswers, username } = body;
 
         // Validate data
-        if (!userId || !paperId || typeof userAnswers !== 'object') {
+        if (
+            !userId ||
+            !paperId ||
+            !username ||
+            typeof userAnswers !== 'object'
+        ) {
             return new Response(JSON.stringify({ message: 'Invalid data' }), {
                 status: 400,
             });
@@ -64,6 +69,7 @@ export async function POST(request: NextRequest) {
         // Create a new PaperSubmission document
         const newSubmission = new PaperSubmission({
             userId,
+            username,
             paperId,
             score,
         });

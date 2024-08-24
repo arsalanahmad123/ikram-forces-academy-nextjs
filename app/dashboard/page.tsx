@@ -61,6 +61,12 @@ export default function Dashboard() {
                         >
                             Papers
                         </Link>
+                        <Link
+                            href="/dashboard/paper-submissions"
+                            className={buttonVariants({ variant: 'default' })}
+                        >
+                            Today Results
+                        </Link>
                     </div>
                 )}
             </div>
