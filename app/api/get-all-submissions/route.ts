@@ -8,7 +8,6 @@ export async function GET() {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        // Check for paper submissions created today
         const submissions = await PaperSubmission.find({
             createdAt: {
                 $gte: today,

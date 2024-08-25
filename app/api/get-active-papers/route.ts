@@ -7,7 +7,6 @@ export async function GET() {
         await connectDB();
 
         const papers = await Paper.find({ active: true }).lean();
-
         return NextResponse.json(papers, { status: 200 });
     } catch (error) {
         console.error('Error getting active papers:', error);

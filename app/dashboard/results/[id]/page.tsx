@@ -86,7 +86,7 @@ export default function Page({ params }: ResultProps) {
         getResult();
     }, [params.id]);
 
-    const passThreshold = 0.6; // 60%
+    const passThreshold = 0.9;
     const hasPassed =
         score !== null &&
         totalScore !== null &&
@@ -107,12 +107,21 @@ export default function Page({ params }: ResultProps) {
                 {loading ? (
                     <Loader />
                 ) : (
-                    <div className="dark:bg-white/40 bg-theme2/50 min-w-[400px] p-10 backdrop-blur-md z-50 rounded-md flex flex-col justify-center items-center">
-                        <h3 className="text-6xl font-extrabold dark:text-white">
-                            Score
+                    <div className="dark:bg-white/70 bg-theme2/50 min-w-[400px] p-10 backdrop-blur-md z-50 rounded-md flex flex-col justify-center items-center">
+                        <h3
+                            className={`text-6xl font-extrabold ${
+                                hasPassed ? 'text-green-400' : 'text-red-400'
+                            }`}
+                        >
+                            {hasPassed
+                                ? 'Congratulations 🎇'
+                                : 'Better Luck Next Time 😢'}
                         </h3>
-                        <p className="text-2xl mt-5 dark:text-white">
+                        <p className="text-4xl mt-5 dark:text-white mb-3">
                             {score} out of {totalScore}
+                        </p>
+                        <p className="text-2xl">
+                            {hasPassed ? 'You Passed' : 'You Failed'}
                         </p>
                     </div>
                 )}

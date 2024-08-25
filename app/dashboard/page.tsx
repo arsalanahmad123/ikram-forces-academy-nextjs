@@ -24,8 +24,11 @@ export default function Dashboard() {
     useEffect(() => {
         const getActivePapers = async () => {
             try {
-                const res = await fetch(`/api/get-active-papers`);
-
+                const res = await fetch(`/api/get-active-papers`, {
+                    headers: {
+                        'Cache-Control': 'no-store',
+                    },
+                });
                 if (res.ok) {
                     const data = await res.json();
                     setActivePapers(data);

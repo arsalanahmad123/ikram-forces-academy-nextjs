@@ -30,10 +30,12 @@ export default async function Page() {
 
     const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
     try {
-        // Fetch data from the API endpoint
-        const res = await fetch(`${baseURL}/api/get-all-submissions`);
+        const res = await fetch(`${baseURL}/api/get-all-submissions`, {
+            headers: {
+                'Cache-Control': 'no-store',
+            },
+        });
 
-        // Handle the case where fetching data fails
         if (!res.ok) {
             throw new Error('Failed to fetch submissions');
         }

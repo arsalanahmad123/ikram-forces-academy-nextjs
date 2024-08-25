@@ -92,14 +92,19 @@ export default function PaperCard({
     async function changeStatus(id: string) {
         try {
             const res = await fetch('/api/change-paper-status', {
+                headers: { 'Cache-Control': 'no-store' },
                 method: 'PUT',
                 body: JSON.stringify({ paperId: id }),
             });
 
-            if (res.ok) {
-                router.refresh();
-                toast.success('Paper status updated');
+            if (!res.ok) {
+                console.error('Failed to change status:', await res.text());
+                toast.error('Error updating paper status');
+                return;
             }
+
+            router.refresh();
+            toast.success('Paper status updated');
         } catch (error: any) {
             console.log(error.message);
             toast.error('Error updating paper status');
