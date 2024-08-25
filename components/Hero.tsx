@@ -22,31 +22,33 @@ export default function Hero() {
                 />
             </div>
 
-            <div className="relative w-full lg:px-52 lg:py-10 grid grid-cols-1 xl:grid-cols-2 mt-52 gap-10">
+            <div className="relative w-full xl:px-20 lg:py-10 grid grid-cols-1 lg:grid-cols-2 mt-52 gap-10">
+                {/* Vector SVG positioned on the side */}
                 <div className="absolute xl:top-0 xl:left-20 lg:-top-1 md:left-32 lg:-left-32 -top-10 left-5">
                     <Vector color="#20AD96" />
                 </div>
 
-                <div className="flex flex-col gap-10 lg:px-10 px-3 container">
-                    <p className="font-semibold text-lg text-theme1 bg-white/30 backdrop-blur-3xl rounded-md p-1.5 max-w-md dark:bg-white/10 dark:text-white">
+                {/* Text and button container */}
+                <div className="flex flex-col gap-10 lg:px-10 px-3 container xl:pt-20">
+                    <p className="font-semibold text-lg md:text-base text-theme1 bg-white/30 backdrop-blur-3xl rounded-md p-1.5 max-w-md dark:bg-white/10 dark:text-white">
                         Innovative Coaching and Tutoring Solutions
                     </p>
 
-                    <h1 className="font-extrabold lg:text-7xl md:text-6xl text-4xl tracking-wide text-primary dark:text-white">
-                        Tranform Your Child&rsquo;s Future With Export Guidance
+                    <h1 className="font-extrabold xl:text-7xl lg:text-6xl md:text-5xl text-4xl tracking-wide text-primary dark:text-white">
+                        Transform Your Child&rsquo;s Future With Expert Guidance
                     </h1>
 
-                    <p className="font-medium text-lg max-w-lg">
+                    <p className="font-medium text-lg md:text-base max-w-lg">
                         Partner with us to provide your child with the finest
                         academic support. Our tailored coaching programs are
                         crafted to maximize their potential and set them on a
                         path to success.
                     </p>
 
-                    <Button className="md:w-[20%] w-[40%]">Learn More</Button>
+                    <Button className="md:w-[30%] w-[40%]">Learn More</Button>
                 </div>
 
-                <div className="flex justify-end items-center relative xl:mt-0 ">
+                <div className="flex justify-end items-center relative xl:mt-0">
                     <Image
                         src="/hero-banner.png"
                         alt="Hero Banner"
@@ -54,23 +56,18 @@ export default function Hero() {
                         style={{ objectFit: 'contain' }}
                     />
 
-                    <span
-                        className="absolute xl:top-0 xl:right-0 lg:top-1/2 lg:-right-16 md:top-1/4 md:right-10 bg-white shadow-md rounded-md backdrop-blur-md md:p-5  justify-center items-center gap-2 font-bold md:text-lg
-                            dark:bg-slate-950/20 dark:backdrop-blur-lg hidden md:flex
-                            "
-                    >
+                    {/* Text badges */}
+                    <span className="absolute xl:top-0 xl:right-0 lg:top-1/2 lg:-right-16 md:top-1/4 md:right-10 bg-white shadow-md rounded-md backdrop-blur-md md:p-5 justify-center items-center gap-2 font-bold md:text-lg dark:bg-slate-950/20 dark:backdrop-blur-lg hidden md:flex">
                         <Check className="text-theme1 " />
                         Achieve Success
                     </span>
 
-                    <span
-                        className="absolute xl:top-0 xl:left-5 lg:top-1/3 lg:left-10 md:top-1/4 md:left-10 bg-white shadow-md rounded-md backdrop-blur-md md:p-5  justify-center items-center gap-2 font-bold md:text-lg dark:bg-slate-950/20 dark:backdrop-blur-lg hidden md:flex
-                        "
-                    >
+                    <span className="absolute xl:top-0 xl:left-5 lg:top-1/3 lg:left-10 md:top-1/4 md:left-10 bg-white shadow-md rounded-md backdrop-blur-md md:p-5 justify-center items-center gap-2 font-bold md:text-lg dark:bg-slate-950/20 dark:backdrop-blur-lg hidden md:flex">
                         <Check className="text-theme1 " />
                         Expert Guidance
                     </span>
 
+                    {/* Decorative SVG */}
                     <svg
                         viewBox="0 0 200 200"
                         xmlns="http://www.w3.org/2000/svg"

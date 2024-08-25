@@ -38,8 +38,8 @@ export default function NavBar() {
 
     return (
         <nav className="py-5 bg-white/55 dark:bg-gray-950/55 backdrop-blur-md w-full flex justify-between items-center lg:px-10 px-5 fixed top-0 z-50">
-            <Link href={'/'}>
-                <Image src={'/logo.svg'} alt="Logo" width={100} height={100} />
+            <Link href={'/'} className="dark:bg-white object-fit rounded-full">
+                <Image src={'/logo.png'} alt="Logo" width={120} height={100} />
             </Link>
 
             <ul className="flex-row justify-center items-center gap-x-10 hidden xl:flex">

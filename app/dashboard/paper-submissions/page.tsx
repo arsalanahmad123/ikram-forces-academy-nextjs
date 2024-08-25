@@ -26,14 +26,12 @@ type Submission = {
 };
 
 export default async function Page() {
-    // Initialize data as an empty array to handle the case where data might be undefined
     let data: Submission[] = [];
 
+    const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
     try {
         // Fetch data from the API endpoint
-        const res = await fetch(
-            'http://localhost:3000/api/get-all-submissions'
-        );
+        const res = await fetch(`${baseURL}/api/get-all-submissions`);
 
         // Handle the case where fetching data fails
         if (!res.ok) {
