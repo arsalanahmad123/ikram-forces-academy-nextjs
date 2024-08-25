@@ -76,7 +76,6 @@ export default function Dashboard() {
                     <ActivePaperCard key={paper._id} paper={paper} />
                 ))}
                 {activePapers === null && <Loader />}
-                {activePapers?.length === 0 && <span>No active papers</span>}
             </div>
         </div>
     );
