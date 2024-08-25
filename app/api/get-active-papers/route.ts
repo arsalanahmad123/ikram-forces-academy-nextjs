@@ -5,6 +5,7 @@ import { Paper } from '@/models/models';
 export async function GET() {
     try {
         await connectDB();
+
         const papers = await Paper.find({ active: true }).lean();
 
         return NextResponse.json(papers, { status: 200 });
