@@ -50,6 +50,7 @@ export default function PaperCard({
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Cache-Control': 'no-store',
                 },
                 body: JSON.stringify({ paperId: id }),
             });
@@ -70,6 +71,7 @@ export default function PaperCard({
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Cache-Control': 'no-store',
                 },
                 body: JSON.stringify({
                     id: id,

@@ -88,13 +88,15 @@ const ActivePaperCard = ({ paper }: { paper: Paper }) => {
     return (
         <div
             key={paper._id}
-            className="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between"
+            className="bg-white dark:bg-gray-900/40 rounded-lg shadow-md p-6 flex flex-col justify-between"
         >
             <div>
                 <h2 className="text-xl font-semibold mb-4 text-theme1">
                     {paper.title}
                 </h2>
-                <p className="text-gray-500 mb-6">Time: {paper.time} minutes</p>
+                <p className="text-gray-500 mb-6 dark:text-white">
+                    Time: {paper.time} minutes
+                </p>
             </div>
             <Link href={`/dashboard/solve-paper/${paper._id}`}>
                 <Button>Start Paper</Button>

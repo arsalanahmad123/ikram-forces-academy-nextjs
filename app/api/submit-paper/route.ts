@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/config/connectDB';
 import { Paper, PaperSubmission } from '@/models/models';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export async function POST(request: NextRequest) {
     try {
+        noStore();
         // Connect to the database
         await connectDB();
 

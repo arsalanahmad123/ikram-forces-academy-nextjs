@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/config/connectDB';
 import { Paper } from '@/models/models';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export async function PUT(request: Request) {
     try {
+        noStore();
         await connectDB();
 
         const body = await request.json();
