@@ -46,7 +46,7 @@ export default function PaperCard({
 
     async function deletePaper(id: string): Promise<void> {
         try {
-            const res = await fetch(`http://localhost:3000/api/papers`, {
+            const res = await fetch(`/api/papers`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function PaperCard({
 
     async function editPaper(): Promise<void> {
         try {
-            const res = await fetch(`http://localhost:3000/api/papers`, {
+            const res = await fetch(`/api/papers`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
