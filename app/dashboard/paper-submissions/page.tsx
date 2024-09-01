@@ -1,3 +1,5 @@
+'use client';
+import { useState, useEffect } from 'react';
 import {
     Table,
     TableBody,
@@ -26,31 +28,36 @@ type Submission = {
 };
 
 export default async function Page() {
-    let data: Submission[] = [];
+    const [data, setData] = useState<Submission[] | null>(null);
 
-    const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-    try {
-        const res = await fetch(`${baseURL}/api/get-all-submissions`, {
-            headers: {
-                'Cache-Control': 'no-store',
-            },
-        });
+    useEffect(() => {
+        const baseURL =
+            process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        async function getData() {
+            try {
+                const res = await fetch(`${baseURL}/api/get-all-submissions`, {
+                    headers: {
+                        'Cache-Control': 'no-store',
+                    },
+                });
 
-        if (!res.ok) {
-            throw new Error('Failed to fetch submissions');
+                if (!res.ok) {
+                    throw new Error('Failed to fetch submissions');
+                }
+
+                setData(await res.json());
+            } catch (error) {
+                console.error('Error fetching submissions:', error);
+            }
         }
-
-        // Parse the response data
-        data = await res.json();
-    } catch (error) {
-        console.error('Error fetching submissions:', error);
-    }
+        getData();
+    }, []);
 
     return (
         <div className="h-screen flex flex-col justify-start mt-52 items-center">
             <div className="container">
                 <h3 className="mb-10 text-4xl font-bold">Today Result</h3>
-                {data.length === 0 ? (
+                {data?.length === 0 ? (
                     <p>No submissions available.</p>
                 ) : (
                     <Table className="w-full">
@@ -62,7 +69,7 @@ export default async function Page() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {data.map((submission: Submission) => (
+                            {data?.map((submission: Submission) => (
                                 <TableRow key={submission._id}>
                                     <TableCell>{submission.username}</TableCell>
                                     <TableCell>
