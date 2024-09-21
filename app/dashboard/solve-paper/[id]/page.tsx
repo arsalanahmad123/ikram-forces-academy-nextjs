@@ -9,9 +9,7 @@ import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
 interface SolvePaperParams {
-    params: {
-        id: string;
-    };
+    params: { id: string };
 }
 
 type Question = {
@@ -37,30 +35,44 @@ export default function Page({ params }: SolvePaperParams) {
     }>({});
     const [showModal, setShowModal] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
     const router = useRouter();
 
+    // Fetch the paper data
     useEffect(() => {
-        const getPaper = async () => {
+        const fetchPaper = async () => {
             try {
                 const res = await fetch(`/api/papers/${params.id}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    setPaper(data);
-                }
+                if (!res.ok) throw new Error('Failed to fetch paper');
+                const data = await res.json();
+                setPaper(data);
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 toast.error(
                     'Something went wrong, please contact administration'
                 );
             }
         };
-        getPaper();
+        fetchPaper();
     }, [params.id]);
 
-    const handleAgree = () => {
-        setShowModal(false);
+    // Handle navigation confirmation
+    const handleBeforeNavigation = (event: PopStateEvent) => {
+        event.preventDefault();
+        const userConfirmed = window.confirm('Paper will be submitted now!');
+        if (userConfirmed) handleSubmit();
+        else window.history.pushState(null, '', window.location.href);
     };
+
+    useEffect(() => {
+        window.addEventListener('popstate', handleBeforeNavigation, {
+            capture: true,
+        });
+        return () => {
+            window.removeEventListener('popstate', handleBeforeNavigation);
+        };
+    }, []);
+
+    const handleAgree = () => setShowModal(false);
 
     const handleNextQuestion = (selectedAnswer: number | null) => {
         if (paper) {
@@ -71,7 +83,9 @@ export default function Page({ params }: SolvePaperParams) {
                     [currentQuestionId]: selectedAnswer,
                 }));
             }
-            setCurrentQuestionIndex((prev) => prev + 1);
+            setCurrentQuestionIndex((prev) =>
+                Math.min(prev + 1, paper.questions.length - 1)
+            );
         }
     };
 
@@ -79,76 +93,49 @@ export default function Page({ params }: SolvePaperParams) {
         setCurrentQuestionIndex((prev) => Math.max(0, prev - 1));
     };
 
-    const handleSubmit = async (selectedAnswer?: number | null) => {
-        if (paper) {
-            setIsSubmitting(true);
+    const handleSubmit = async () => {
+        if (!paper) return;
+        console.log(userAnswers);
+        setIsSubmitting(true);
+        try {
+            const res = await fetch('/api/submit-paper', {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                body: JSON.stringify({
+                    paperId: paper._id,
+                    userId: user?.id,
+                    username: user?.username,
+                    userAnswers,
+                }),
+            });
 
-            const currentQuestionId = paper.questions[currentQuestionIndex]._id;
-
-            // Update answers if an answer is provided
-            if (selectedAnswer !== null) {
-                setUserAnswers((prev) => ({
-                    ...prev,
-                    [currentQuestionId]: selectedAnswer as number,
-                }));
-            }
-
-            // Wait for the state to be updated (this guarantees that the API call uses the updated state)
-            const updatedAnswers =
-                selectedAnswer !== null
-                    ? { ...userAnswers, [currentQuestionId]: selectedAnswer }
-                    : userAnswers;
-
-            // Perform API call with updatedAnswers
-            try {
-                const res = await fetch('/api/submit-paper', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    method: 'POST',
-                    body: JSON.stringify({
-                        paperId: paper._id,
-                        userId: user?.id,
-                        username: user?.username,
-                        userAnswers: updatedAnswers,
-                    }),
-                });
-
-                const data = await res.json();
-                if (res.ok) {
-                    toast.success('Paper submitted successfully!');
-                    router.replace(`/dashboard/results/${data}`);
-                } else {
-                    toast.error(data.error);
-                }
-            } catch (error) {
-                console.log(error);
-                toast.error('An error occurred. Please try again later.');
-            } finally {
-                setIsSubmitting(false);
-            }
+            if (!res.ok) throw new Error('Submission failed');
+            const data = await res.json();
+            toast.success('Paper submitted successfully!');
+            router.replace(`/dashboard/results/${data}`);
+        } catch (error) {
+            console.error(error);
+            toast.error('An error occurred. Please try again later.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
-    if (!paper) {
-        return (
-            <div className="h-screen flex justify-center items-center">
-                <Loader />
-            </div>
-        );
-    }
-
-    const currentQuestion = paper.questions[currentQuestionIndex];
+    if (!paper) return <Loader />;
 
     return (
-        <div className="min-h-screen relative inset-0 flex flex-col bg-gray-900">
+        <div className="min-h-screen flex flex-col bg-gray-900">
             <ModalDialog open={showModal} onAgree={handleAgree} />
-            {!showModal && currentQuestion && (
+            {!showModal && paper.questions[currentQuestionIndex] && (
                 <QuestionDisplay
                     currentQuestionIndex={currentQuestionIndex}
                     totalQuestions={paper.questions.length}
-                    question={currentQuestion}
-                    selectedAnswer={userAnswers[currentQuestion._id] || null}
+                    question={paper.questions[currentQuestionIndex]}
+                    selectedAnswer={
+                        userAnswers[
+                            paper.questions[currentQuestionIndex]._id
+                        ] || null
+                    }
                     onPrev={handlePrevQuestion}
                     onNext={handleNextQuestion}
                     onSubmit={handleSubmit}
