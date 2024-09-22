@@ -86,7 +86,7 @@ export default function Page({ params }: ResultProps) {
         getResult();
     }, [params.id]);
 
-    const passThreshold = 0.9;
+    const passThreshold = 0.8;
     const hasPassed =
         score !== null &&
         totalScore !== null &&
@@ -121,7 +121,9 @@ export default function Page({ params }: ResultProps) {
                             {score} out of {totalScore}
                         </p>
                         <p className="text-2xl">
-                            {hasPassed ? 'You Passed' : 'You Failed'}
+                            {hasPassed
+                                ? 'You passed as you got above 80%'
+                                : 'You failed as you remained below 80%'}
                         </p>
                     </div>
                 )}
