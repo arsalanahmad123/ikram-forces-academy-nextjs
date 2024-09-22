@@ -95,7 +95,6 @@ export default function Page({ params }: SolvePaperParams) {
 
     const handleSubmit = async () => {
         if (!paper) return;
-        console.log(userAnswers);
         setIsSubmitting(true);
         try {
             const res = await fetch('/api/submit-paper', {
@@ -141,6 +140,7 @@ export default function Page({ params }: SolvePaperParams) {
                     onSubmit={handleSubmit}
                     timeLimit={paper.time}
                     isSubmitting={isSubmitting}
+                    userAnswers={userAnswers}
                 />
             )}
         </div>

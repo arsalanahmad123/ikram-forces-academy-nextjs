@@ -21,6 +21,7 @@ interface QuestionDisplayProps {
     onSubmit: (selectedAnswer?: number | null) => void;
     timeLimit: number;
     isSubmitting: boolean;
+    userAnswers: { [questionId: string]: number };
 }
 
 export default function QuestionDisplay({
@@ -33,6 +34,7 @@ export default function QuestionDisplay({
     onSubmit,
     timeLimit,
     isSubmitting,
+    userAnswers,
 }: QuestionDisplayProps) {
     const [selectedOption, setSelectedOption] = useState<number | null>(
         selectedAnswer
@@ -41,8 +43,12 @@ export default function QuestionDisplay({
 
     // Update selected option when selectedAnswer changes
     useEffect(() => {
-        setSelectedOption(selectedAnswer);
-    }, [selectedAnswer]);
+        if (userAnswers[question._id] !== undefined) {
+            setSelectedOption(userAnswers[question._id]);
+        } else {
+            setSelectedOption(selectedAnswer);
+        }
+    }, [selectedAnswer, question._id, userAnswers]);
 
     // Timer management
     useEffect(() => {
@@ -66,7 +72,6 @@ export default function QuestionDisplay({
     const handleOptionClick = (option: number) => setSelectedOption(option);
 
     const handleNextClick = () => {
-        console.log(selectedOption);
         onNext(selectedOption);
         setSelectedOption(null);
     };
@@ -79,7 +84,7 @@ export default function QuestionDisplay({
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 h-[100lvh] items-center">
-            <div className="bg-white p-5 h-full flex flex-col  py-20 gap-3">
+            <div className="bg-white p-5 h-full flex flex-col py-20 gap-3">
                 <div className="text-xl font-bold text-right mb-4">
                     Time Left: {formatTime(timeLeft)}
                 </div>
