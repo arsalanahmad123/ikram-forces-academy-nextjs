@@ -7,6 +7,15 @@ import QuestionDisplay from '@/components/QuestionDisplay';
 import Loader from '@/components/Loader';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import { MenuSquareIcon, CheckCircleIcon, XCircleIcon } from 'lucide-react';
+import {
+    Sheet,
+    SheetTrigger,
+    SheetContent,
+    SheetTitle,
+    SheetHeader,
+    SheetDescription,
+} from '@/components/ui/sheet';
 
 interface SolvePaperParams {
     params: { id: string };
@@ -123,25 +132,80 @@ export default function Page({ params }: SolvePaperParams) {
     if (!paper) return <Loader />;
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-900">
+        <div className="min-h-screen flex flex-col bg-gray-900 relative">
             <ModalDialog open={showModal} onAgree={handleAgree} />
             {!showModal && paper.questions[currentQuestionIndex] && (
-                <QuestionDisplay
-                    currentQuestionIndex={currentQuestionIndex}
-                    totalQuestions={paper.questions.length}
-                    question={paper.questions[currentQuestionIndex]}
-                    selectedAnswer={
-                        userAnswers[
-                            paper.questions[currentQuestionIndex]._id
-                        ] || null
-                    }
-                    onPrev={handlePrevQuestion}
-                    onNext={handleNextQuestion}
-                    onSubmit={handleSubmit}
-                    timeLimit={paper.time}
-                    isSubmitting={isSubmitting}
-                    userAnswers={userAnswers}
-                />
+                <>
+                    <Sheet>
+                        <SheetTrigger>
+                            <div className="absolute top-5 left-5 bg-primary p-3 rounded-md cursor-pointer">
+                                <MenuSquareIcon
+                                    size={30}
+                                    className="text-white dark:text-slate-900"
+                                />
+                            </div>
+                        </SheetTrigger>
+                        <SheetContent side={'left'} className="overflow-y-auto">
+                            <SheetHeader>
+                                <SheetTitle>Question Details </SheetTitle>
+                                <SheetDescription>
+                                    {paper.questions.map((question, ind) => {
+                                        const isAnswered =
+                                            userAnswers[question._id] !==
+                                            undefined;
+
+                                        return (
+                                            <div
+                                                key={question._id}
+                                                className={`${
+                                                    currentQuestionIndex === ind
+                                                        ? 'bg-gray-100'
+                                                        : ''
+                                                } p-2 my-1 hover:bg-gray-100 rounded-sm cursor-pointer flex justify-between items-center`}
+                                                onClick={() =>
+                                                    setCurrentQuestionIndex(ind)
+                                                }
+                                            >
+                                                <span className="text-xl">
+                                                    Q.{ind + 1}
+                                                </span>
+                                                <span className="ml-4">
+                                                    {isAnswered ? (
+                                                        <CheckCircleIcon
+                                                            className="text-green-500"
+                                                            size={20}
+                                                        />
+                                                    ) : (
+                                                        <XCircleIcon
+                                                            className="text-red-500"
+                                                            size={20}
+                                                        />
+                                                    )}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </SheetDescription>
+                            </SheetHeader>
+                        </SheetContent>
+                    </Sheet>
+                    <QuestionDisplay
+                        currentQuestionIndex={currentQuestionIndex}
+                        totalQuestions={paper.questions.length}
+                        question={paper.questions[currentQuestionIndex]}
+                        selectedAnswer={
+                            userAnswers[
+                                paper.questions[currentQuestionIndex]._id
+                            ] || null
+                        }
+                        onPrev={handlePrevQuestion}
+                        onNext={handleNextQuestion}
+                        onSubmit={handleSubmit}
+                        timeLimit={paper.time}
+                        isSubmitting={isSubmitting}
+                        userAnswers={userAnswers}
+                    />
+                </>
             )}
         </div>
     );

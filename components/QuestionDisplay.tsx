@@ -84,8 +84,8 @@ export default function QuestionDisplay({
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 h-[100lvh] items-center">
-            <div className="bg-white p-5 h-full flex flex-col py-20 gap-3">
-                <div className="text-xl font-bold text-right mb-4">
+            <div className="bg-white dark:bg-slate-900 p-5 h-full flex flex-col py-20 gap-3">
+                <div className="text-xl font-bold text-right mb-4 text-gray-800 dark:text-white">
                     Time Left: {formatTime(timeLeft)}
                 </div>
                 {question.image && (
@@ -96,19 +96,21 @@ export default function QuestionDisplay({
                         alt="Question"
                     />
                 )}
-                <h2 className="text-4xl font-semibold italic">
+                <h2 className="text-4xl font-semibold italic text-gray-900 dark:text-white">
                     {currentQuestionIndex + 1}.
                 </h2>
-                <h3 className="lg:text-5xl text-3xl font-bold">
+                <h3 className="lg:text-5xl text-3xl font-bold text-gray-900 dark:text-white">
                     {question.title}
                 </h3>
             </div>
-            <div className="bg-gray-200 px-5 lg:py-40 py-10 h-[100lvh] flex flex-col gap-4">
+            <div className="bg-gray-200 dark:bg-slate-800 px-5 lg:py-40 py-10 h-[100lvh] flex flex-col gap-4">
                 {question.options.map((option, i) => (
                     <div
                         key={i}
                         className={`p-3 mb-2 border cursor-pointer rounded-sm ${
-                            selectedOption === i ? 'bg-theme1' : 'bg-white'
+                            selectedOption === i
+                                ? 'bg-theme1 text-white'
+                                : 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white'
                         }`}
                         onClick={() => handleOptionClick(i)}
                     >
