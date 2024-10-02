@@ -7,7 +7,7 @@ export default function About() {
     return (
         <div
             id="about"
-            className="relative inset-0 flex flex-col justify-center items-center pt-20"
+            className="relative inset-0 flex flex-col justify-center items-center py-20"
         >
             <div
                 aria-hidden="true"
