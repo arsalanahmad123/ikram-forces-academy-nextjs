@@ -1,8 +1,6 @@
 import { SignUp } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
 
 export default function Page() {
-    redirect('/');
     return (
         <div className="min-h-screen flex flex-col justify-center items-center py-52 lg:py-20">
             <SignUp />

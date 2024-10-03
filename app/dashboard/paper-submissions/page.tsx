@@ -1,5 +1,7 @@
 'use client';
+
 import { useState, useEffect } from 'react';
+
 import {
     Table,
     TableBody,
@@ -24,11 +26,11 @@ type Submission = {
     _id: string;
     score: number;
     username: string;
-    paperId: Paper;
+    paper: Paper; // Rename paperId to paper
 };
 
-export default async function Page() {
-    const [data, setData] = useState<Submission[] | null>(null);
+export default function Page() {
+    const [data, setData] = useState<Submission[]>([]); // Initialize as empty array
 
     useEffect(() => {
         const baseURL =
@@ -45,7 +47,8 @@ export default async function Page() {
                     throw new Error('Failed to fetch submissions');
                 }
 
-                setData(await res.json());
+                const submissions = await res.json();
+                setData(submissions);
             } catch (error) {
                 console.error('Error fetching submissions:', error);
             }
@@ -57,7 +60,7 @@ export default async function Page() {
         <div className="h-screen flex flex-col justify-start mt-52 items-center">
             <div className="container">
                 <h3 className="mb-10 text-4xl font-bold">Today Result</h3>
-                {data?.length === 0 ? (
+                {data.length === 0 ? (
                     <p>No submissions available.</p>
                 ) : (
                     <Table className="w-full">
@@ -69,11 +72,11 @@ export default async function Page() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {data?.map((submission: Submission) => (
+                            {data.map((submission: Submission) => (
                                 <TableRow key={submission._id}>
                                     <TableCell>{submission.username}</TableCell>
                                     <TableCell>
-                                        {submission.paperId.title}
+                                        {submission.paper.title}
                                     </TableCell>
                                     <TableCell>{submission.score}</TableCell>
                                 </TableRow>

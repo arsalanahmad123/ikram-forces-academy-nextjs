@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import Image from 'next/image';
 import ThemeToggle from '@/components/ThemeToggle';
 import { Menu } from 'lucide-react';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import {
     Sheet,
@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/sheet';
 import Link from 'next/link';
 
-// import { SignedIn, UserButton } from '@clerk/nextjs';
+import { SignedIn, UserButton } from '@clerk/nextjs';
 
 const navList = [
     { text: 'Home', link: '/#home' },
@@ -29,10 +29,10 @@ const navList = [
 ];
 
 export default function NavBar() {
-    // const router = useRouter();
-    // const handleDashboardRedirect = () => {
-    //     router.push('/dashboard');
-    // };
+    const router = useRouter();
+    const handleDashboardRedirect = () => {
+        router.push('/dashboard');
+    };
 
     const { isSignedIn } = useUser();
 
@@ -58,15 +58,15 @@ export default function NavBar() {
 
                 <ThemeToggle />
 
-                {/* <Button
+                <Button
                     onClick={handleDashboardRedirect}
                     className="font-semibold lg:ml-10"
                 >
                     {isSignedIn ? 'Dashboard' : 'Student Portal'}
-                </Button> */}
-                {/* <SignedIn>
+                </Button>
+                <SignedIn>
                     <UserButton />
-                </SignedIn> */}
+                </SignedIn>
             </ul>
 
             <div className="xl:hidden flex justify-between items-center gap-10">
@@ -110,12 +110,12 @@ export default function NavBar() {
 
                             <ThemeToggle />
 
-                            {/* <Button
+                            <Button
                                 onClick={handleDashboardRedirect}
                                 className="font-semibold"
                             >
                                 {isSignedIn ? 'Dashboard' : 'Student Portal'}
-                            </Button> */}
+                            </Button>
                         </div>
 
                         <SheetFooter>
@@ -125,9 +125,9 @@ export default function NavBar() {
                         </SheetFooter>
                     </SheetContent>
                 </Sheet>
-                {/* <SignedIn>
+                <SignedIn>
                     <UserButton />
-                </SignedIn> */}
+                </SignedIn>
             </div>
         </nav>
     );
