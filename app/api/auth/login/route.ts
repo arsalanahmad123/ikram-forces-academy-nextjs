@@ -37,12 +37,12 @@ export async function POST(request: Request) {
             );
         }
 
-        const token = sign({ userId: user._id }, process.env.JWT_SECRET!, {
+        const token = sign({ userId: user.id }, process.env.JWT_SECRET!, {
             expiresIn: '1d',
         });
 
         const safeUser = {
-            _id: user._id,
+            _id: user.id,
             username: user.username,
             email: user.email,
             isVerified: user.isVerified,
