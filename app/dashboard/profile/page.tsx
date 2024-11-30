@@ -10,7 +10,7 @@ export default function Profile() {
             <h2 className="text-2xl font-semibold mb-4">User Profile</h2>
             <div className="bg-white shadow rounded-lg p-6">
                 <p>
-                    <strong>Name:</strong> {user?.username}
+                    <strong>Name:</strong> {user?.name}
                 </p>
                 <p>
                     <strong>Email:</strong> {user?.email}
