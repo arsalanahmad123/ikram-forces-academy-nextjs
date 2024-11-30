@@ -28,7 +28,7 @@ export default function RootLayout({
     children: ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning cz-shortcut-listen="true">
+        <html lang="en" suppressHydrationWarning>
             <body
                 className={cn(
                     'relative min-h-screen bg-background font-sans antialiased flex flex-col ',

@@ -44,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             const userData = await res.json();
             setUser(userData.user);
         } catch (error) {
-            throw error;
+            console.error(error)
         } finally {
             setLoading(false);
         }
