@@ -51,6 +51,7 @@ export default function Register() {
                 const data = await res.json();
                 throw new Error(data.message || 'Registration failed');
             }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             setError(error.message || 'Something went wrong.');
             toast.error(error.message || 'Something went wrong.');
