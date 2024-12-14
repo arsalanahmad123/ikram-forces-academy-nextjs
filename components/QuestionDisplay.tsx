@@ -89,7 +89,7 @@ export default function QuestionDisplay({
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-4 md:p-8 flex flex-col justify-center items-center">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-300 to-blue-600 p-4 md:p-8 flex flex-col justify-center items-center">
             <Card className="w-full max-w-4xl bg-white/90 backdrop-blur-sm shadow-xl rounded-xl overflow-hidden">
                 <CardContent className="p-6 md:p-8">
                     <div className="flex justify-between items-center mb-6">
