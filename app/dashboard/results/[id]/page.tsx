@@ -1,12 +1,19 @@
-import { Suspense } from 'react';
+import { Suspense, use } from 'react';
 import { ResultContent } from '@/components/ResultContent';
 import Loader from '@/components/Loader';
 
-export default function ResultPage({ params }: { params: { id: string } }) {
+interface ResultIdParams {
+    params: Promise<{ id: string }>;
+}
+
+export default function ResultPage({params}: ResultIdParams) {
+
+    const resolvedParams = use(params)
+
     return (
         <div className="relative overflow-hidden h-screen dark:bg-gray-900 w-full">
             <Suspense fallback={<Loader />}>
-                <ResultContent id={params.id} />
+                <ResultContent id={resolvedParams.id} />
             </Suspense>
         </div>
     );
