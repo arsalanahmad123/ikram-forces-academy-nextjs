@@ -55,7 +55,7 @@ export default function NavBar() {
 
                 <Link
                     href={'/dashboard'}
-                    className="font-semibold lg:ml-10"
+                    className="font-semibold"
                 >
                     {user ? 'Dashboard' : 'Student Portal'}
                 </Link>
@@ -63,7 +63,8 @@ export default function NavBar() {
                 {user && (
                     <Button
                         onClick={logout}
-                        className="font-semibold lg:ml-10"
+                        variant={'destructive'}
+                        className="font-semibold"
                     >
                         Sign Out
                     </Button>
@@ -120,6 +121,7 @@ export default function NavBar() {
 
                             {user && (
                                 <Button
+                                variant={'destructive'}
                                     onClick={logout}
                                     className="font-semibold"
                                 >

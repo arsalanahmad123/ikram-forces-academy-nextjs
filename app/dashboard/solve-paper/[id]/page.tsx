@@ -81,9 +81,10 @@ export default function Page({ params }: SolvePaperParams) {
             const data = await res.json();
             toast.success('Paper submitted successfully!');
             router.replace(`/dashboard/results/${data}`);
-        } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
             console.error(error);
-            toast.error('An error occurred. Please try again later.');
+            toast.error(error?.message);
         } finally {
             setIsSubmitting(false);
         }

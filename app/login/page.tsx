@@ -44,6 +44,7 @@ export default function Login() {
             const data = await res.json();
             setUser(data.user);
             toast.success('Logged in successfully. Redirecting...');
+            window.location.href = "/dashboard"
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.error('Error:', error.message);

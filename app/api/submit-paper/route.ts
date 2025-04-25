@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
             paperId,
             createdAt: {
                 $gte: today, // Greater than or equal to today's date
-                $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000), // Less than tomorrow's date
+                $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000), 
             },
         });
 
