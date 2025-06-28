@@ -61,7 +61,11 @@ export default function Dashboard() {
     );
 }
 
-const ActivePaperCard = ({ paper }: { paper: Paper }) => {
+const ActivePaperCard = ({
+    paper,
+}: {
+    paper: Paper & { alreadySubmitted?: boolean };
+}) => {
     return (
         <div
             key={paper._id}
@@ -75,9 +79,19 @@ const ActivePaperCard = ({ paper }: { paper: Paper }) => {
                     Time: {paper.time} minutes
                 </p>
             </div>
-            <Link href={`/dashboard/solve-paper/${paper._id}`}>
-                <Button>Start Paper</Button>
-            </Link>
+
+            {!paper.alreadySubmitted && (
+                <Link href={`/dashboard/solve-paper/${paper._id}`}>
+                    <Button>Start Paper</Button>
+                </Link>
+            )}
+
+            {paper.alreadySubmitted && (
+                <p className="text-sm text-green-600 font-semibold">
+                    ✅ Already submitted today
+                </p>
+            )}
         </div>
     );
 };
+

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose,{Document} from 'mongoose';
 
 // Question Model
 const questionSchema = new mongoose.Schema(
@@ -40,3 +40,23 @@ export const Question =
     mongoose.models.Question || mongoose.model('Question', questionSchema);
 export const Paper =
     mongoose.models.Paper || mongoose.model('Paper', paperSchema);
+
+export interface IQuestion extends Document {
+    paperId: mongoose.Types.ObjectId;
+    title: string;
+    options: string[];
+    correctAnswer: number;
+    image?: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface IPaper extends Document {
+    title: string;
+    description?: string;
+    questions: mongoose.Types.ObjectId[];
+    time: number;
+    active: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}
