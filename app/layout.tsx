@@ -7,6 +7,7 @@ import NavBarWrapper from '@/components/NavBarWrapper';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from './contexts/AuthContext';
+import { Analytics } from '@vercel/analytics/next';
 
 const fontQuicksand = FontQuicksand({
     subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
                     fontQuicksand.variable
                 )}
             >
+                <Analytics />
                 <AuthProvider>
                     <ThemeProvider
                         attribute="class"
