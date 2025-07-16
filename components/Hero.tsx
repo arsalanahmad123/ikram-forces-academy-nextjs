@@ -37,7 +37,7 @@ export default function Hero() {
 
                     <h1 className="font-extrabold xl:text-7xl lg:text-6xl md:text-5xl text-4xl tracking-wide text-primary dark:text-white">
                         Build Your Child&rsquo;s Future with{' '}
-                        <span className="inline-block bg-gradient-to-r from-teal-200 to-teal-800 text-white py-1 rounded-lg shadow-md dark:from-teal-200 dark:to-purple-400 text-transparent bg-clip-text font-extrabold uppercase">
+                        <span className="inline-block font-extrabold uppercase">
                             Ikram Forces Academy
                         </span>
                     </h1>
@@ -49,7 +49,13 @@ export default function Hero() {
                         at success with our trusted learning programs.
                     </p>
 
-                    <a href='#about' className={cn(buttonVariants({variant: 'default'}), 'md:w-[30%] w-[40%]')}>
+                    <a
+                        href="#about"
+                        className={cn(
+                            buttonVariants({ variant: 'default' }),
+                            'md:w-[30%] w-[40%]'
+                        )}
+                    >
                         Learn More
                     </a>
                 </div>
