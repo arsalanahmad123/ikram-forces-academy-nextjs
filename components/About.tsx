@@ -33,18 +33,19 @@ export default function About() {
 
                 <div className="flex flex-col gap-5">
                     <p className="lg:text-xl text-lg font-light lg:max-w-[600px]">
-                        At <span className="">Ikram Forces Academy</span>, our
-                        mission is to help every student reach their fullest
-                        potential. Through focused coaching, we build
-                        confidence, discipline, and a strong academic
-                        foundation.
+                        At{' '}
+                        <span className="font-medium">
+                            Ikram Forces Academy
+                        </span>
+                        , we&apos;re here to help students grow. With our focused
+                        coaching, we guide them to build confidence, stay
+                        disciplined, and get strong in their studies.
                     </p>
 
                     <p className="lg:text-xl text-lg font-light lg:max-w-[600px]">
-                        Our tailored tuition programs are crafted to prepare
-                        young minds for the unique challenges of cadet college
-                        and beyond, ensuring they are ready to excel in every
-                        aspect of life.
+                        Our coaching programs are specially designed for cadet
+                        college preparation and more. We help students get ready
+                        for real challenges — in exams and in life.
                     </p>
                 </div>
             </div>

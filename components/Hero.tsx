@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Check } from 'lucide-react';
-import { Button } from './ui/button';
+import { buttonVariants } from './ui/button';
+import { cn } from '@/lib/utils';
 import Vector from './Vector';
 
 export default function Hero() {
@@ -31,21 +32,26 @@ export default function Hero() {
                 {/* Text and button container */}
                 <div className="flex flex-col gap-10 lg:px-10 px-3 container xl:pt-20">
                     <p className="font-semibold text-lg md:text-base text-theme1 bg-white/30 backdrop-blur-3xl rounded-md p-1.5 max-w-md dark:bg-white/10 dark:text-white">
-                        Innovative Coaching and Tutoring Solutions
+                        Ikram Forces Academy - Expert Coaching & Mentorship
                     </p>
 
                     <h1 className="font-extrabold xl:text-7xl lg:text-6xl md:text-5xl text-4xl tracking-wide text-primary dark:text-white">
-                        Transform Your Child&rsquo;s Future With Expert Guidance
+                        Build Your Child&rsquo;s Future with{' '}
+                        <span className="inline-block bg-gradient-to-r from-teal-200 to-teal-800 text-white py-1 rounded-lg shadow-md dark:from-teal-200 dark:to-purple-400 text-transparent bg-clip-text font-extrabold uppercase">
+                            Ikram Forces Academy
+                        </span>
                     </h1>
 
                     <p className="font-medium text-lg md:text-base max-w-lg">
-                        Partner with us to provide your child with the finest
-                        academic support. Our tailored coaching programs are
-                        crafted to maximize their potential and set them on a
-                        path to success.
+                        At Ikram Forces Academy, we help students prepare for
+                        army, navy, and air force exams through focused coaching
+                        and personal attention. Give your child the best chance
+                        at success with our trusted learning programs.
                     </p>
 
-                    <Button className="md:w-[30%] w-[40%]">Learn More</Button>
+                    <a href='#about' className={cn(buttonVariants({variant: 'default'}), 'md:w-[30%] w-[40%]')}>
+                        Learn More
+                    </a>
                 </div>
 
                 <div className="flex justify-end items-center relative xl:mt-0">

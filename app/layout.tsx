@@ -16,9 +16,14 @@ const fontQuicksand = FontQuicksand({
 });
 
 export const metadata: Metadata = {
-    title: 'Homepage-Ikram Forces Academy',
-    description: 'Home page ',
+    title: 'Ikram Forces Academy',
+    description:
+        'Join Ikram Forces Academy to prepare for army, navy, and air force exams with expert guidance and trusted study material.',
+    icons: {
+        icon: '/logo.ico'
+    }
 };
+
 export const revalidate = 60;
 
 export default function RootLayout({

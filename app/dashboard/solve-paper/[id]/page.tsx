@@ -92,7 +92,8 @@ export default function Page({ params }: SolvePaperParams) {
 
     const handleBeforeUnload = useCallback((event: BeforeUnloadEvent) => {
         event.preventDefault();
-        event.returnValue = '';
+        event.returnValue = 'Are you sure you want to leave? Your answers will be submitted.';
+
     }, []);
 
     const handleVisibilityChange = useCallback(() => {
