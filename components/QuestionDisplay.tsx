@@ -33,6 +33,8 @@ interface QuestionDisplayProps {
     userAnswers: { [questionId: string]: number };
 }
 
+// ...imports remain same
+
 export default function QuestionDisplay({
     question,
     currentQuestionIndex,
@@ -48,6 +50,7 @@ export default function QuestionDisplay({
     const [selectedOption, setSelectedOption] = useState<number | null>(
         selectedAnswer
     );
+    const [showImageModal, setShowImageModal] = useState(false);
     const [timeLeft, setTimeLeft] = useState(timeLimit * 60);
 
     useEffect(() => {
@@ -60,11 +63,7 @@ export default function QuestionDisplay({
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setTimeLeft((prevTime) => {
-                if (prevTime > 0) return prevTime - 1;
-                clearInterval(timer);
-                return 0;
-            });
+            setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
         }, 1000);
         return () => clearInterval(timer);
     }, []);
@@ -73,7 +72,7 @@ export default function QuestionDisplay({
         if (timeLeft === 0 && !isSubmitting) {
             onSubmit(selectedOption);
         }
-    }, [timeLeft, onSubmit, selectedOption, isSubmitting]);
+    }, [timeLeft, isSubmitting, onSubmit, selectedOption]);
 
     const handleOptionClick = (option: number) => setSelectedOption(option);
 
@@ -88,10 +87,13 @@ export default function QuestionDisplay({
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
+    const hasImage = Boolean(question.image);
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-300 to-blue-600 p-4 md:p-8 flex flex-col justify-center items-center">
-            <Card className="w-full max-w-4xl bg-white/90 backdrop-blur-sm shadow-xl rounded-xl overflow-hidden">
+            <Card className="w-full max-w-5xl bg-white/90 backdrop-blur-sm shadow-xl rounded-xl overflow-hidden">
                 <CardContent className="p-6 md:p-8">
+                    {/* Top Info */}
                     <div className="flex justify-between items-center mb-6">
                         <div className="text-2xl font-bold text-indigo-700">
                             Question {currentQuestionIndex + 1} of{' '}
@@ -102,6 +104,7 @@ export default function QuestionDisplay({
                         </div>
                     </div>
 
+                    {/* Progress */}
                     <Progress
                         value={
                             ((currentQuestionIndex + 1) / totalQuestions) * 100
@@ -109,54 +112,68 @@ export default function QuestionDisplay({
                         className="mb-6 h-2 bg-indigo-100"
                     />
 
-                    {question.image && (
-                        <div className="mb-6 rounded-lg overflow-hidden">
-                            <Image
-                                src={question.image}
-                                width={800}
-                                height={400}
-                                alt="Question Image"
-                                className="w-full h-auto object-cover"
-                            />
+                    {/* Main Question Layout */}
+                    <div
+                        className={`grid gap-6 ${
+                            hasImage ? 'md:grid-cols-2 items-start' : ''
+                        }`}
+                    >
+                        {/* Image Column */}
+                        {hasImage && (
+                            <div className="flex justify-center">
+                                <Image
+                                    src={question.image!}
+                                    alt="Question Image"
+                                    width={800}
+                                    height={400}
+                                    className="max-h-[300px] w-auto object-contain rounded-lg cursor-pointer hover:scale-105 transition-transform"
+                                    onClick={() => setShowImageModal(true)}
+                                />
+                            </div>
+                        )}
+
+                        {/* Question & Options Column */}
+                        <div>
+                            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+                                {question.title}
+                            </h3>
+                            <div className="space-y-4">
+                                {question.options.map((option, i) => (
+                                    <motion.div
+                                        key={i}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                    >
+                                        <Button
+                                            variant={
+                                                selectedOption === i
+                                                    ? 'default'
+                                                    : 'outline'
+                                            }
+                                            className={`w-full justify-start text-left p-4 ${
+                                                selectedOption === i
+                                                    ? 'bg-indigo-600 text-white'
+                                                    : 'hover:bg-indigo-50'
+                                            }`}
+                                            onClick={() => handleOptionClick(i)}
+                                        >
+                                            <span className="mr-4">
+                                                {String.fromCharCode(65 + i)}.
+                                            </span>
+                                            {option}
+                                            {selectedOption === i && (
+                                                <CheckCircle className="ml-auto h-5 w-5" />
+                                            )}
+                                        </Button>
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
-                    )}
-
-                    <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
-                        {question.title}
-                    </h3>
-
-                    <div className="space-y-4">
-                        {question.options.map((option, i) => (
-                            <motion.div
-                                key={i}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                <Button
-                                    variant={
-                                        selectedOption === i
-                                            ? 'default'
-                                            : 'outline'
-                                    }
-                                    className={`w-full justify-start text-left p-4 ${
-                                        selectedOption === i
-                                            ? 'bg-indigo-600 text-white'
-                                            : 'hover:bg-indigo-50'
-                                    }`}
-                                    onClick={() => handleOptionClick(i)}
-                                >
-                                    <span className="mr-4">
-                                        {String.fromCharCode(65 + i)}.
-                                    </span>
-                                    {option}
-                                    {selectedOption === i && (
-                                        <CheckCircle className="ml-auto h-5 w-5" />
-                                    )}
-                                </Button>
-                            </motion.div>
-                        ))}
                     </div>
 
+                    {/* Image Modal */}
+
+                    {/* Navigation Buttons */}
                     <div className="flex justify-between mt-8">
                         <Button
                             variant="outline"
@@ -195,6 +212,20 @@ export default function QuestionDisplay({
                     </div>
                 </CardContent>
             </Card>
+            {showImageModal && (
+                <div
+                    className="fixed inset-0 bg-black/70 flex justify-center items-center z-50 p-4"
+                    onClick={() => setShowImageModal(false)}
+                >
+                    <Image
+                        src={question.image!}
+                        alt="Full Image"
+                        width={1000}
+                        height={700}
+                        className="max-h-[90%] max-w-[90%] object-contain rounded-lg shadow-lg"
+                    />
+                </div>
+            )}
         </div>
     );
 }
