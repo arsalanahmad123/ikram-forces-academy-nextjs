@@ -35,7 +35,6 @@ type Paper = {
     questions: Question[];
 };
 
-
 export default function Page({ params }: SolvePaperParams) {
     const resolvedParams = use(params);
     const [paper, setPaper] = useState<Paper | null>(null);
@@ -44,7 +43,38 @@ export default function Page({ params }: SolvePaperParams) {
     const [userAnswers, setUserAnswers] = useState<Record<string, number>>({});
     const [showModal, setShowModal] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submissionId, setSubmissionId] = useState<string | null>(null);
+    const [hasInitialized, setHasInitialized] = useState(false);
     const router = useRouter();
+
+    // Create submission record immediately when page loads
+    const initializeSubmission = useCallback(async () => {
+        if (hasInitialized || !user?.id || !resolvedParams.id) return;
+
+        try {
+            const res = await fetch('/api/initialize-submission', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    paperId: resolvedParams.id,
+                    userId: user.id,
+                    username: user.name,
+                }),
+            });
+
+            if (!res.ok) {
+                const error = await res.text();
+                throw new Error(error || 'Failed to initialize submission');
+            }
+
+            const data = await res.json();
+            setSubmissionId(data.submissionId);
+            setHasInitialized(true);
+        } catch {
+            toast.error('Failed to start the paper. Please try again.');
+            router.push('/dashboard');
+        }
+    }, [hasInitialized, user, resolvedParams.id, router]);
 
     const fetchPaper = useCallback(async () => {
         try {
@@ -62,68 +92,75 @@ export default function Page({ params }: SolvePaperParams) {
         fetchPaper();
     }, [fetchPaper]);
 
+    useEffect(() => {
+        if (paper && user) {
+            initializeSubmission();
+        }
+    }, [paper, user, initializeSubmission]);
+
     const handleSubmit = useCallback(async () => {
-        if (!paper || isSubmitting) return;
-        setIsSubmitting(true);
-        try {
-            const res = await fetch('/api/submit-paper', {
-                headers: { 'Content-Type': 'application/json' },
-                method: 'POST',
-                body: JSON.stringify({
-                    paperId: resolvedParams?.id,
-                    userId: user?.id,
-                    username: user?.name,
-                    userAnswers,
-                }),
-            });
+    if (!submissionId || isSubmitting || !user || !paper) return;
+    setIsSubmitting(true);
 
-            if (!res.ok) throw new Error('Submission failed');
-            const data = await res.json();
-            toast.success('Paper submitted successfully!');
-            router.replace(`/dashboard/results/${data}`);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-            console.error(error);
-            toast.error(error?.message);
-        } finally {
-            setIsSubmitting(false);
-        }
-    }, [paper, user, userAnswers, router, resolvedParams?.id, isSubmitting]);
+    try {
+        const res = await fetch('/api/submit-paper', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                submissionId,
+                userAnswers,
+                userId: user.id,
+                paperId: paper._id,
+                username: user.name,
+            }),
+        });
 
-    const handleBeforeUnload = useCallback((event: BeforeUnloadEvent) => {
-        event.preventDefault();
-        event.returnValue = 'Are you sure you want to leave? Your answers will be submitted.';
+        if (!res.ok) throw new Error('Failed to submit paper');
 
-    }, []);
+        const data = await res.json();
+        toast.success('Paper submitted successfully!');
+        router.replace(`/dashboard/results/${data?.resultId || submissionId}`);
+    } catch (error) {
+        console.error('Error submitting paper:', error);
+        toast.error('Failed to submit paper');
+    } finally {
+        setIsSubmitting(false);
+    }
+}, [submissionId, userAnswers, user, paper, router, isSubmitting]);
 
-    const handleVisibilityChange = useCallback(() => {
-        if (document.visibilityState === 'hidden') {
-            handleSubmit();
-        }
-    }, [handleSubmit]);
 
-    const handlePopState = useCallback(
-        (event: PopStateEvent) => {
-            event.preventDefault();
-            handleSubmit();
-        },
-        [handleSubmit]
-    );
 
     useEffect(() => {
-        window.addEventListener('beforeunload', handleBeforeUnload);
+        if (!submissionId) return;
+
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                console.log('[AutoSubmit] Tab switched or minimized');
+                handleSubmit();
+            }
+        };
+
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            console.log('[AutoSubmit] Page closing or refreshing');
+            handleSubmit();
+            // Optional: Show native browser confirmation dialog
+            e.preventDefault();
+            e.returnValue = '';
+        };
+
         document.addEventListener('visibilitychange', handleVisibilityChange);
-        window.addEventListener('popstate', handlePopState);
+        window.addEventListener('beforeunload', handleBeforeUnload);
 
         return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
             document.removeEventListener(
                 'visibilitychange',
                 handleVisibilityChange
             );
-            window.removeEventListener('popstate', handlePopState);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, [handleBeforeUnload, handleVisibilityChange, handlePopState]);
+    }, [submissionId, handleSubmit]);
+
+    
 
     const handleAgree = useCallback(() => setShowModal(false), []);
 
@@ -166,7 +203,7 @@ export default function Page({ params }: SolvePaperParams) {
         [paper, userAnswers, currentQuestionIndex]
     );
 
-    if (!paper) return <Loader />;
+    if (!paper || !hasInitialized) return <Loader />;
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-900 relative w-full">

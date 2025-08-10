@@ -1,9 +1,9 @@
 'use client';
 import Loader from '@/components/Loader';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import {toast} from 'sonner';
+import { toast } from 'sonner';
 
 interface Paper {
     _id: string;
@@ -16,7 +16,6 @@ export default function Dashboard() {
     const [activePapers, setActivePapers] = useState<Paper[] | null>(null);
 
     useEffect(() => {
-        
         const getActivePapers = async () => {
             try {
                 const res = await fetch(`/api/get-active-papers`, {
@@ -50,7 +49,7 @@ export default function Dashboard() {
                     className="relative left-[calc(80%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                 />
             </div>
-                <h1 className="text-4xl font-bold">Active Papers</h1>
+            <h1 className="text-4xl font-bold">Active Papers</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
                 {activePapers?.map((paper) => (
                     <ActivePaperCard key={paper._id} paper={paper} />
@@ -66,6 +65,28 @@ const ActivePaperCard = ({
 }: {
     paper: Paper & { alreadySubmitted?: boolean };
 }) => {
+    const router = useRouter();
+
+    const handleStartPaper = () => {
+        // Open solve paper in new tab
+        const newTab = window.open(
+            `/dashboard/solve-paper/${paper._id}`,
+            '_blank'
+        );
+
+        // Check if the new tab was successfully opened
+        if (newTab) {
+            // Optional: Focus on the new tab
+            newTab.focus();
+
+            // Redirect current tab to home page
+            router.push('/');
+        } else {
+            // Handle case where popup was blocked
+            toast.error('Please allow popups to start the paper in a new tab');
+        }
+    };
+
     return (
         <div
             key={paper._id}
@@ -79,13 +100,9 @@ const ActivePaperCard = ({
                     Time: {paper.time} minutes
                 </p>
             </div>
-
             {!paper.alreadySubmitted && (
-                <Link href={`/dashboard/solve-paper/${paper._id}`}>
-                    <Button>Start Paper</Button>
-                </Link>
+                <Button onClick={handleStartPaper}>Start Paper</Button>
             )}
-
             {paper.alreadySubmitted && (
                 <p className="text-sm text-green-600 font-semibold">
                     ✅ Already submitted today
@@ -94,4 +111,3 @@ const ActivePaperCard = ({
         </div>
     );
 };
-
