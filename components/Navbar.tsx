@@ -23,7 +23,8 @@ const navList = [
     { text: 'About', link: '/#about' },
     { text: 'Cadet Coaching', link: '/#cadetcoaching' },
     { text: 'Academic Tutoring', link: '/#tutoring' },
-    { text: 'Kids Coding', link: '/#kids-coding' },
+    { text: 'Online Tests', link: '/#kids-study' },
+    { text: 'Contact', link: '/contact' },
 ];
 
 export default function NavBar() {
